@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHADOW PAIR CODE</title>
+  <title>ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;600&display=swap');
@@ -30,11 +30,22 @@
     }
     
     body {
-      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e3c72);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     
     .grid {
@@ -197,13 +208,20 @@
     }
     
     .box {
-      background: var(--glass-bg);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       padding: 30px;
       border: 1px solid var(--glass-border);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
       flex: 1;
+      animation: float 6s ease-in-out infinite;
+      text-align: center;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
     
     .config-box {
@@ -218,6 +236,7 @@
       align-items: center;
       gap: 10px;
       color: var(--secondary);
+      justify-content: center;
     }
     
     .title i {
@@ -235,29 +254,34 @@
       color: var(--secondary);
     }
     
-    input[type="text"] {
+    .input-container {
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 0.5rem;
+      gap: 0.5rem;
       width: 100%;
-      padding: 12px 15px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 16px;
-      transition: all 0.3s ease;
+      margin-top: 20px;
     }
     
-    input[type="text"]:focus {
+    .input-container input {
+      flex: 1;
+      border: none;
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-size: 1rem;
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.3);
+      background: rgba(255, 255, 255, 0.9);
+      color: #000;
+      font-weight: bold;
     }
     
     .btn {
-      background: linear-gradient(45deg, var(--primary), var(--accent));
+      background: linear-gradient(45deg, #00FF69, #0077ff);
       color: white;
       border: none;
       padding: 12px 25px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
@@ -268,12 +292,8 @@
     }
     
     .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
-    }
-    
-    .btn:active {
-      transform: translateY(0);
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #0077ff, #00ffe0);
     }
     
     .config-item {
@@ -373,6 +393,9 @@
       gap: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
+      color: red;
+      font-weight: bold;
+      font-size: 1.2rem;
     }
     
     .code-display:hover {
@@ -389,7 +412,8 @@
       font-family: 'Orbitron', monospace;
       font-size: 18px;
       letter-spacing: 1px;
-      color: var(--text);
+      color: black;
+      font-weight: bold;
     }
     
     .waiting {
@@ -414,10 +438,6 @@
       100% { transform: scale(1); }
     }
     
-    .pulse {
-      animation: pulse 2s infinite;
-    }
-    
     .error-message {
       color: var(--danger);
       background: rgba(255, 56, 96, 0.1);
@@ -434,6 +454,24 @@
       border-radius: 8px;
       border: 1px solid rgba(0, 255, 140, 0.3);
       margin-top: 15px;
+    }
+    
+    #copy-btn {
+      display: none;
+      margin-top: 20px;
+      background: linear-gradient(45deg, #ff0099, #493240);
+      padding: 10px 20px;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    #copy-btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #493240, #ff0099);
     }
     
     @media (max-width: 768px) {
@@ -453,6 +491,18 @@
       .status-bar {
         order: 2;
       }
+      
+      .box {
+        width: 90%;
+      }
+      
+      .input-container {
+        flex-direction: column;
+      }
+      
+      .input-container button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -464,7 +514,7 @@
     <div class="header">
       <div class="logo">
         <i class="fas fa-robot logo-icon"></i>
-        <div class="logo-text">SHADOW PAIR</div>
+        <div class="logo-text">ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ</div>
       </div>
       
       <div class="status-bar">
@@ -478,7 +528,7 @@
           <div class="battery-level">
             <div class="battery-fill battery-high" id="battery-level"></div>
           </div>
-          <span id="battery-percent">Chargement...</span>
+          <span id="battery-percent">Loading...</span>
         </div>
         
         <div class="status-item time" id="current-time">
@@ -543,21 +593,24 @@
           <span>GENERATE PAIR CODE</span>
         </div>
         
-        <div class="form-group">
-          <label for="number">WhatsApp Number (with country code)</label>
-          <input type="text" id="number" placeholder="+1 234 567 8900">
+        <h6>ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ</h6>
+        <h6>ᴇɴᴛᴇʀ ʏᴏᴜʀ ɴᴜᴍʙᴇʀ ᴡɪᴛʜ ᴄᴏᴜɴᴛʀʏ ᴄᴏᴅᴇ</h6>
+        
+        <div class="input-container">
+          <input placeholder="554492173xxx" type="number" id="number">
+          <button class="btn" id="submit">
+            <i class="fas fa-bolt"></i>
+            <span>Submit</span>
+          </button>
         </div>
         
-        <button class="btn" id="submit">
-          <i class="fas fa-bolt"></i>
-          <span>GENERATE CODE</span>
-        </button>
-        
-        <div class="result" id="pair"></div>
         <div class="waiting" id="waiting-message">
           <i class="fas fa-spinner"></i>
-          <span>Generating your pair code...</span>
+          <span>Please wait a while</span>
         </div>
+        
+        <div class="result" id="pair"></div>
+        <button id="copy-btn">Copy Code</button>
       </div>
     </div>
   </div>
@@ -575,6 +628,7 @@
     const batteryPercent = document.getElementById("battery-percent");
     const batteryIcon = document.getElementById("battery-icon");
     const currentTime = document.getElementById("current-time");
+    const copyButton = document.getElementById("copy-btn");
     
     // Configuration toggles
     const autoLike = document.getElementById("auto-like");
@@ -691,40 +745,19 @@
       }
     }
     
-    // Generate a random pairing code (simulation)
-    function generatePairCode() {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let code = '';
-      for (let i = 0; i < 6; i++) {
-        code += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-      return code;
-    }
-    
-    // Copy to clipboard
-    async function copyToClipboard() {
-      let text = document.getElementById("copy-value").innerText;
-      let codeDisplay = document.getElementById("code-display");
-      
-      try {
-        await navigator.clipboard.writeText(text);
-        
-        codeDisplay.innerHTML = '<i class="fas fa-check" style="color:#00ff00; margin-right:8px;"></i> COPIED!';
-        codeDisplay.style.background = 'rgba(0, 255, 0, 0.1)';
-        codeDisplay.style.border = '1px solid rgba(0, 255, 0, 0.3)';
-        
-        setTimeout(() => {
-          codeDisplay.innerHTML = `
-            <i class="fas fa-copy" style="color:var(--secondary);"></i>
-            <span class="code-text">CODE:</span>
-            <span class="code-value" id="copy-value">${text}</span>
-          `;
-          codeDisplay.style.background = 'rgba(0, 0, 0, 0.3)';
-          codeDisplay.style.border = '1px solid var(--glass-border)';
-        }, 2000);
-      } catch (err) {
-        console.error('Failed to copy: ', err);
-      }
+    // Copy to clipboard function from your original code
+    async function Copy() {
+      let text = document.getElementById("copy").innerText;
+      let obj = document.getElementById("copy");
+      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
+      obj.innerText = "COPIED";
+      obj.style = "color:blue;font-weight:bold";
+      obj.size = "5";
+      setTimeout(() => {
+        obj.innerText = text;
+        obj.style = "color:black;font-weight-bold";
+        obj.size = "5";
+      }, 500);
     }
     
     // Initialize
@@ -741,43 +774,34 @@
       setInterval(checkApiStatus, 60000);
     }
     
-    // Form submission
+    // Form submission - Using your original pairing code logic
     submitButton.addEventListener("click", async (e) => {
       e.preventDefault();
       
-      // Check API status first
-      const isApiWorking = await checkApiStatus();
-      if (!isApiWorking) {
-        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> API is currently unavailable. Please try again later.</div>';
-        return;
-      }
-      
       if (!numberInput.value) {
-        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Enter your WhatsApp number with country code.</div>';
-      } else if (numberInput.value.replace(/[^0-9]/g, "").length < 8) {
-        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-times"></i> Invalid number format (too short)</div>';
+        pairElement.innerHTML = '<a style="color:black;font-weight:bold">❗Enter your whatsapp number with country code.</a><br><br>';
+      } else if (numberInput.value.replace(/[^0-9]/g, "").length < 11) {
+        pairElement.innerHTML = '<a style="color:black;font-weight:bold">❌Invalid number format❌</a><br><br>';
       } else {
-        const cleanNumber = numberInput.value.replace(/[^0-9]/g, "");
-        let formattedNumber = "";
-        
-        // Format number for display
-        if (cleanNumber.length > 0) {
-          formattedNumber = '+' + cleanNumber;
-          // Add spaces for readability
-          if (cleanNumber.length > 3) {
-            formattedNumber = formattedNumber.slice(0, 4) + ' ' + formattedNumber.slice(4);
+        const bc = numberInput.value.replace(/[^0-9]/g, "");
+        let bb = "";
+        let bbc = "";
+        const cc = bc.split('');
+        cc.map(a => {
+          bbc += a;
+          if (bbc.length == 3) {
+            bb += " " + a;
+          } else if (bbc.length == 8) {
+            bb += " " + a;
+          } else {
+            bb += a;
           }
-          if (cleanNumber.length > 6) {
-            formattedNumber = formattedNumber.slice(0, 8) + ' ' + formattedNumber.slice(8);
-          }
-          if (cleanNumber.length > 9) {
-            formattedNumber = formattedNumber.slice(0, 12) + ' ' + formattedNumber.slice(12);
-          }
-        }
-        
-        numberInput.value = formattedNumber;
+        });
+        numberInput.type = "text";
+        numberInput.value = "+" + bb;
+        numberInput.style = "color:black;font-size:20px";
+        pairElement.innerHTML = '<a style="color:black;font-weight:bold">Please wait </a><br><br>';
         waitingMessage.style.display = "block";
-        pairElement.innerHTML = '';
         
         try {
           // Get current configuration values
@@ -788,30 +812,38 @@
             AUTO_RECORDING: autoRecord.checked
           };
           
-          // In a real implementation, you would send this config to your server
           console.log('Sending configuration:', config);
           
-          // Simulate API call delay
-          await new Promise(resolve => setTimeout(resolve, 2000));
-          
-          // Generate pairing code (in real app, this would come from the server)
-          const code = generatePairCode();
+          // Use the same API endpoint as your working code
+          let { data } = await axios(`/code?number=${bc}`);
+          let code = data.code || "Service Unavailable";
           
           waitingMessage.style.display = "none";
+          pairElement.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
+          copyButton.style.display = "block";
           
-          pairElement.innerHTML = `
-            <div class="code-display pulse" id="code-display" onclick="copyToClipboard()">
-              <i class="fas fa-copy" style="color:var(--secondary);"></i>
-              <span class="code-text">CODE:</span>
-              <span class="code-value" id="copy-value">${code}</span>
-            </div>
-            <div class="success-message">
-              <i class="fas fa-check-circle"></i> Configuration applied successfully!
-            </div>
-          `;
         } catch (error) {
           waitingMessage.style.display = "none";
           pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Service Unavailable: ' + error.message + '</div>';
+        }
+      }
+    });
+    
+    // Copy button functionality
+    copyButton.addEventListener("click", async () => {
+      const codeElement = document.getElementById("copy");
+      if (codeElement) {
+        const code = codeElement.innerText.replace('CODE: ', '');
+        try {
+          await navigator.clipboard.writeText(code);
+          copyButton.textContent = "Copied!";
+          copyButton.style.background = "linear-gradient(45deg, #00FF69, #0077ff)";
+          setTimeout(() => {
+            copyButton.textContent = "Copy Code";
+            copyButton.style.background = "linear-gradient(45deg, #ff0099, #493240)";
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
         }
       }
     });
