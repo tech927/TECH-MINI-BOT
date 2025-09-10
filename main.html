@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>𝐒𝐇𝐀𝐃𝐎𝐖 𝐌𝐈𝐍𝐈 𝐏𝐀𝐈𝐑</title>
+  <link rel="icon" type="jpg" href="https://files.catbox.moe/9z2ixp.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e3c72);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      overflow: hidden;
+      position: relative;
+      color: #fff;
+    }
+
+    /* --- Animation du gradient --- */
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .box {
+      width: 360px;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+      text-align: center;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .box i {
+      font-size: 3rem;
+      color: cyan;
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, cyan, #00ff69);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h6 {
+      margin: 5px 0;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .input-container {
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 0.5rem;
+      gap: 0.5rem;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .input-container input {
+      flex: 1;
+      border: none;
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-size: 1rem;
+      outline: none;
+      background: rgba(255, 255, 255, 0.9);
+      color: #000;
+      font-weight: bold;
+    }
+
+    .input-container button {
+      background: linear-gradient(45deg, #00FF69, #0077ff);
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .input-container button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #0077ff, #00ffe0);
+    }
+
+    #waiting-message {
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #ffdd57;
+    }
+
+    #pair {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    #copy-btn {
+      display: none;
+      margin-top: 20px;
+      background: linear-gradient(45deg, #ff0099, #493240);
+      padding: 10px 20px;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #copy-btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #493240, #ff0099);
+    }
+
+    @media (max-width: 500px) {
+      .box { width: 90%; }
+      .input-container { flex-direction: column; }
+      .input-container button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box" id="box">
+      <div id="text">
+        <i class="fa fa-user"></i>
+        <h3>𝐒𝐇𝐀𝐃𝐎𝐖 𝐏𝐀𝐈𝐑𝐈𝐍𝐆 𝐂𝐎𝐃𝐄</h3>
+        <h6>ᴍᴀᴅᴇ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ</h6>
+        <h6>ᴇɴᴛᴇʀ ʏᴏᴜʀ ɴᴜᴍʙᴇʀ ᴡɪᴛʜ ᴄᴏᴜɴᴛʀʏ ᴄᴏᴅᴇ</h6>
+        <div class="input-container">
+          <input placeholder="554492173xxx" type="number" id="number">
+          <button id="submit">Submit</button>
+        </div>
+        <div id="waiting-message" style="display: none;">Please wait a while</div>
+        <div id="pair"></div>
+        <button id="copy-btn">Copy Code</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ton JavaScript reste inchangé -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    /* --- Ton script original --- */
+    let a = document.getElementById("pair");
+    let b = document.getElementById("submit");
+    let c = document.getElementById("number");
+    let box = document.getElementById("box");
+
+    async function Copy() {
+      let text = document.getElementById("copy").innerText;
+      let obj = document.getElementById("copy");
+      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
+      obj.innerText = "COPIED";
+      obj.style = "color:blue;font-weight:bold";
+      obj.size = "5";
+      setTimeout(() => {
+        obj.innerText = text;
+        obj.style = "color:black;font-weight-bold";
+        obj.size = "5";
+      }, 500);
+    }
+
+    b.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (!c.value) {
+        a.innerHTML = '<a style="color:black;font-weight:bold">❗Enter your whatsapp number with country code.</a><br><br>';
+      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
+        a.innerHTML = '<a style="color:black;font-weight:bold">❌Invalid number format❌</a><br><br>';
+      } else {
+        const bc = c.value.replace(/[^0-9]/g, "");
+        let bb = "";
+        let bbc = "";
+        const cc = bc.split('');
+        cc.map(a => {
+          bbc += a;
+          if (bbc.length == 3) {
+            bb += " " + a;
+          } else if (bbc.length == 8) {
+            bb += " " + a;
+          } else {
+            bb += a;
+          }
+        });
+        c.type = "text";
+        c.value = "+" + bb;
+        c.style = "color:black;font-size:20px";
+        a.innerHTML = '<a style="color:black;font-weight:bold">Please wait </a><br><br>';
+        let { data } = await axios(`/code?number=${bc}`);
+        let code = data.code || "Service Unavailable";
+        a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
+      }
+    });
+  </script>
+</body>
+  </html>
+    
