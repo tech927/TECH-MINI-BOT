@@ -440,7 +440,60 @@
   "registration": {},
   "pairingCode": "41TFX4Q2",
   "me": {
-    "id": "996776925262@s.whatsapp.net",
-    "name": "~"
-  }
+    "id": "996776925262:1@s.whatsapp.net",
+    "name": "krek koko𓊈𝑺𝑲7𓊉"
+  },
+  "account": {
+    "details": "CJj+gokBEJmsh8YGGAEgACgA",
+    "accountSignatureKey": "SUyFhKTLaqKGz3vnc/KJvcbUFiMiuv6aqrkJ7H83QzQ=",
+    "accountSignature": "YUOmNoIKZ8Loh/fNnkFUnghxwtzTHX2e2frcAP6mjL/c7u18wJHIg+4z39GhCHb7php3MseoFXALVb+pSYLWAg==",
+    "deviceSignature": "OJTmetOvX1Sz0F5UWoU1ZzjYMW1IvIX03I11VpDyTbZHypnYWoLG8uIoeFv5LERD7fQpgPbEQsYz3W8ALcnthA=="
+  },
+  "signalIdentities": [
+    {
+      "identifier": {
+        "name": "996776925262:1@s.whatsapp.net",
+        "deviceId": 0
+      },
+      "identifierKey": {
+        "type": "Buffer",
+        "data": [
+          5,
+          73,
+          76,
+          133,
+          132,
+          164,
+          203,
+          106,
+          162,
+          134,
+          207,
+          123,
+          231,
+          115,
+          242,
+          137,
+          189,
+          198,
+          212,
+          22,
+          35,
+          34,
+          186,
+          254,
+          154,
+          170,
+          185,
+          9,
+          236,
+          127,
+          55,
+          67,
+          52
+        ]
+      }
+    }
+  ],
+  "platform": "smba"
 }
