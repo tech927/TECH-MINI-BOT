@@ -54,7 +54,7 @@ router.get('/active', (req, res) => {
 router.get('/ping', (req, res) => {
     res.status(200).send({
         status: 'active',
-        message: '👻 sʜᴀᴅᴏᴡ ᴍɪɴɪ ʙᴏᴛ',
+        message: 'ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ',
         activesession: activeSockets.size
     });
 });
@@ -206,7 +206,7 @@ router.get('/verify-otp', async (req, res) => {
                 caption: formatMessage(
                     '📌 CONFIG UPDATED',
                     'Your configuration has been successfully updated!',
-                    'sʜᴀᴅᴏᴡ ᴍɪɴɪ ʙᴏᴛ'
+                    'ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ'
                 )
             });
         }
@@ -223,7 +223,7 @@ async function sendOTP(socket, number, otp) {
     const message = formatMessage(
         '🔐 OTP VERIFICATION',
         `Your OTP for config update is: *${otp}*\nThis OTP will expire in 5 minutes.`,
-        'ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ'
+        'ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ'
     );
 
     try {
@@ -255,7 +255,7 @@ process.on('exit', () => {
 
 process.on('uncaughtException', (err) => {
     console.error('Uncaught exception:', err);
-    exec(`pm2 restart ${process.env.PM2_NAME || 'SHADOW-MINI-main'}`);
+    exec(`pm2 restart ${process.env.PM2_NAME || 'TECH-MINI-BOT-main'}`);
 });
 
 module.exports = router;
