@@ -440,7 +440,59 @@
   "registration": {},
   "pairingCode": "DW9K6G5R",
   "me": {
-    "id": "18298949570@s.whatsapp.net",
-    "name": "~"
-  }
+    "id": "18298949570:3@s.whatsapp.net"
+  },
+  "account": {
+    "details": "CJ7AprsHENmoh8YGGAIgACgA",
+    "accountSignatureKey": "uA+Osd4DsWpf8fKhkTAVnSRTIHsyj0lzwObUxParu00=",
+    "accountSignature": "DPJPBWfhc+zL042kV/3w1g0CdKa/fI2aL+iXYe/gmzWmC36+ebrKTwlpO42xbc6khRuE0JxkI5trC/9AzhJOCA==",
+    "deviceSignature": "UGvSa3UU2X2cZbZ17iqi5GO/U6ekjOL2aaAUEn9OerthApLYJHcKxJurYHBh7Jwc+Pwly4dTAFQySvJUUBw0hg=="
+  },
+  "signalIdentities": [
+    {
+      "identifier": {
+        "name": "18298949570:3@s.whatsapp.net",
+        "deviceId": 0
+      },
+      "identifierKey": {
+        "type": "Buffer",
+        "data": [
+          5,
+          184,
+          15,
+          142,
+          177,
+          222,
+          3,
+          177,
+          106,
+          95,
+          241,
+          242,
+          161,
+          145,
+          48,
+          21,
+          157,
+          36,
+          83,
+          32,
+          123,
+          50,
+          143,
+          73,
+          115,
+          192,
+          230,
+          212,
+          196,
+          246,
+          171,
+          187,
+          77
+        ]
+      }
+    }
+  ],
+  "platform": "android"
 }
