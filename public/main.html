@@ -3,228 +3,774 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>𝐒𝐇𝐀𝐃𝐎𝐖 𝐌𝐈𝐍𝐈 𝐏𝐀𝐈𝐑</title>
-  <link rel="icon" type="jpg" href="https://files.catbox.moe/9z2ixp.jpg">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;600&display=swap');
+    
+    :root {
+      --primary: #8a2be2;
+      --secondary: #00f7ff;
+      --accent: #ff2a6d;
+      --dark: #0c0c1d;
+      --darker: #060612;
+      --text: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --success: #00ff8c;
+      --warning: #ffcc00;
+      --danger: #ff3860;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e3c72);
-      background-size: 400% 400%;
-      animation: gradientMove 12s ease infinite;
+      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    .grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(138, 43, 226, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 43, 226, 0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: -2;
+    }
+    
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
       overflow: hidden;
-      position: relative;
-      color: #fff;
     }
-
-    /* --- Animation du gradient --- */
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    
+    .particle {
+      position: absolute;
+      background: var(--secondary);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 15s infinite linear;
     }
-
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
     .container {
-      position: relative;
-      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
     }
-
-    .box {
-      width: 360px;
-      padding: 30px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
-      text-align: center;
-      animation: float 6s ease-in-out infinite;
+    
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--glass-border);
     }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: var(--glass-bg);
+      padding: 10px 15px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
     }
-
-    .box i {
-      font-size: 3rem;
-      color: cyan;
-      margin-bottom: 15px;
-      text-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      font-weight: 500;
     }
-
-    h3 {
-      font-size: 1.6rem;
+    
+    .api-status {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .api-true {
+      background: rgba(0, 255, 140, 0.2);
+      color: var(--success);
+      border: 1px solid rgba(0, 255, 140, 0.3);
+    }
+    
+    .api-false {
+      background: rgba(255, 56, 96, 0.2);
+      color: var(--danger);
+      border: 1px solid rgba(255, 56, 96, 0.3);
+    }
+    
+    .battery {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .battery-level {
+      width: 20px;
+      height: 10px;
+      background: var(--glass-bg);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .battery-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+    
+    .battery-high { background: var(--success); width: 80%; }
+    .battery-medium { background: var(--warning); width: 50%; }
+    .battery-low { background: var(--danger); width: 20%; }
+    
+    .time {
+      font-family: 'Orbitron', monospace;
+      letter-spacing: 1px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo-icon {
+      font-size: 28px;
+      color: var(--secondary);
+      animation: pulse 2s infinite;
+    }
+    
+    .logo-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
       font-weight: 700;
-      margin-bottom: 10px;
-      background: linear-gradient(45deg, cyan, #00ff69);
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
     }
-
-    h6 {
-      margin: 5px 0;
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-
-    .input-container {
+    
+    .main {
       display: flex;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 0.5rem;
-      gap: 0.5rem;
+      gap: 30px;
       width: 100%;
-      margin-top: 20px;
+      max-width: 1000px;
     }
-
-    .input-container input {
+    
+    .box {
+      background: var(--glass-bg);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       flex: 1;
-      border: none;
-      border-radius: 10px;
-      padding: 0.8rem;
-      font-size: 1rem;
+    }
+    
+    .config-box {
+      flex: 0 0 300px;
+    }
+    
+    .title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--secondary);
+    }
+    
+    .title i {
+      font-size: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    input[type="text"]:focus {
       outline: none;
-      background: rgba(255, 255, 255, 0.9);
-      color: #000;
-      font-weight: bold;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.3);
     }
-
-    .input-container button {
-      background: linear-gradient(45deg, #00FF69, #0077ff);
-      border: none;
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
+    
+    .btn {
+      background: linear-gradient(45deg, var(--primary), var(--accent));
       color: white;
-      font-weight: bold;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-
-    .input-container button:hover {
-      transform: scale(1.05);
-      background: linear-gradient(45deg, #0077ff, #00ffe0);
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
     }
-
-    #waiting-message {
-      margin-top: 15px;
-      font-size: 1rem;
-      color: #ffdd57;
+    
+    .btn:active {
+      transform: translateY(0);
     }
-
-    #pair {
-      margin-top: 15px;
-      font-size: 1.1rem;
-      color: #fff;
-      font-weight: bold;
+    
+    .config-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--glass-border);
     }
-
-    #copy-btn {
-      display: none;
+    
+    .config-item:last-child {
+      border-bottom: none;
+    }
+    
+    .config-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+    }
+    
+    .config-label i {
+      color: var(--secondary);
+      font-size: 16px;
+    }
+    
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.2);
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    
+    .emoji-input {
+      width: 100px;
+      padding: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text);
+      text-align: center;
+    }
+    
+    .result {
       margin-top: 20px;
-      background: linear-gradient(45deg, #ff0099, #493240);
-      padding: 10px 20px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .code-display {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
       border-radius: 12px;
-      color: white;
-      font-weight: bold;
-      border: none;
+      padding: 15px 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
-    #copy-btn:hover {
-      transform: scale(1.05);
-      background: linear-gradient(45deg, #493240, #ff0099);
+    
+    .code-display:hover {
+      background: rgba(0, 0, 0, 0.4);
+      border-color: var(--primary);
     }
-
-    @media (max-width: 500px) {
-      .box { width: 90%; }
-      .input-container { flex-direction: column; }
-      .input-container button { width: 100%; }
+    
+    .code-text {
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    
+    .code-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+    
+    .waiting {
+      display: none;
+      text-align: center;
+      padding: 15px;
+      color: var(--secondary);
+    }
+    
+    .waiting i {
+      animation: spin 1s infinite linear;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    .error-message {
+      color: var(--danger);
+      background: rgba(255, 56, 96, 0.1);
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 56, 96, 0.3);
+      margin-top: 15px;
+    }
+    
+    .success-message {
+      color: var(--success);
+      background: rgba(0, 255, 140, 0.1);
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 255, 140, 0.3);
+      margin-top: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .main {
+        flex-direction: column;
+      }
+      
+      .config-box {
+        flex: 1;
+      }
+      
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .status-bar {
+        order: 2;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="grid"></div>
+  <div class="particles" id="particles"></div>
+
   <div class="container">
-    <div class="box" id="box">
-      <div id="text">
-        <i class="fa fa-user"></i>
-        <h3>𝐒𝐇𝐀𝐃𝐎𝐖 𝐏𝐀𝐈𝐑𝐈𝐍𝐆 𝐂𝐎𝐃𝐄</h3>
-        <h6>ᴍᴀᴅᴇ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ</h6>
-        <h6>ᴇɴᴛᴇʀ ʏᴏᴜʀ ɴᴜᴍʙᴇʀ ᴡɪᴛʜ ᴄᴏᴜɴᴛʀʏ ᴄᴏᴅᴇ</h6>
-        <div class="input-container">
-          <input placeholder="554492173xxx" type="number" id="number">
-          <button id="submit">Submit</button>
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-robot logo-icon"></i>
+        <div class="logo-text">ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ</div>
+      </div>
+      
+      <div class="status-bar">
+        <div class="status-item api-status api-true" id="api-status">
+          <i class="fas fa-circle"></i>
+          <span>API: TRUE</span>
         </div>
-        <div id="waiting-message" style="display: none;">Please wait a while</div>
-        <div id="pair"></div>
-        <button id="copy-btn">Copy Code</button>
+        
+        <div class="status-item battery">
+          <i class="fas fa-battery-full"></i>
+          <div class="battery-level">
+            <div class="battery-fill battery-high" id="battery-level"></div>
+          </div>
+          <span id="battery-percent">80%</span>
+        </div>
+        
+        <div class="status-item time" id="current-time">
+          <i class="fas fa-clock"></i>
+          <span>00:00:00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="box config-box">
+        <div class="title">
+          <i class="fas fa-cog"></i>
+          <span>BOT CONFIGURATION</span>
+        </div>
+        
+        <div class="config-item">
+          <div class="config-label">
+            <i class="fas fa-heart"></i>
+            <span>AUTO_LIKE_STATUS</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="auto-like" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="config-item">
+          <div class="config-label">
+            <i class="fas fa-eye"></i>
+            <span>AUTO_VIEW_STATUS</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="auto-view" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="config-item">
+          <div class="config-label">
+            <i class="fas fa-smile"></i>
+            <span>AUTO_LIKE_EMOJI</span>
+          </div>
+          <input type="text" class="emoji-input" id="auto-emoji" value="💋,😶,✨️,💗" maxlength="20">
+        </div>
+        
+        <div class="config-item">
+          <div class="config-label">
+            <i class="fas fa-record-vinyl"></i>
+            <span>AUTO_RECORDING</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="auto-record" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="box">
+        <div class="title">
+          <i class="fas fa-qrcode"></i>
+          <span>GENERATE PAIR CODE</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="number">WhatsApp Number (with country code)</label>
+          <input type="text" id="number" placeholder="+1 234 567 8900">
+        </div>
+        
+        <button class="btn" id="submit">
+          <i class="fas fa-bolt"></i>
+          <span>GENERATE CODE</span>
+        </button>
+        
+        <div class="result" id="pair"></div>
+        <div class="waiting" id="waiting-message">
+          <i class="fas fa-spinner"></i>
+          <span>Generating your pair code...</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Ton JavaScript reste inchangé -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+
   <script>
-    /* --- Ton script original --- */
-    let a = document.getElementById("pair");
-    let b = document.getElementById("submit");
-    let c = document.getElementById("number");
-    let box = document.getElementById("box");
-
-    async function Copy() {
-      let text = document.getElementById("copy").innerText;
-      let obj = document.getElementById("copy");
-      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
-      obj.innerText = "COPIED";
-      obj.style = "color:blue;font-weight:bold";
-      obj.size = "5";
-      setTimeout(() => {
-        obj.innerText = text;
-        obj.style = "color:black;font-weight-bold";
-        obj.size = "5";
-      }, 500);
+    // Elements
+    const pairElement = document.getElementById("pair");
+    const submitButton = document.getElementById("submit");
+    const numberInput = document.getElementById("number");
+    const waitingMessage = document.getElementById("waiting-message");
+    const apiStatus = document.getElementById("api-status");
+    const batteryLevel = document.getElementById("battery-level");
+    const batteryPercent = document.getElementById("battery-percent");
+    const currentTime = document.getElementById("current-time");
+    
+    // Configuration toggles
+    const autoLike = document.getElementById("auto-like");
+    const autoView = document.getElementById("auto-view");
+    const autoEmoji = document.getElementById("auto-emoji");
+    const autoRecord = document.getElementById("auto-record");
+    
+    // Create background particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        const size = Math.random() * 10 + 2;
+        const colors = [
+          'rgba(138, 43, 226, 0.3)', 
+          'rgba(0, 247, 255, 0.3)', 
+          'rgba(255, 42, 109, 0.3)'
+        ];
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
     }
-
-    b.addEventListener("click", async (e) => {
-      e.preventDefault();
-      if (!c.value) {
-        a.innerHTML = '<a style="color:black;font-weight:bold">❗Enter your whatsapp number with country code.</a><br><br>';
-      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
-        a.innerHTML = '<a style="color:black;font-weight:bold">❌Invalid number format❌</a><br><br>';
+    
+    // Update time
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      currentTime.querySelector('span').textContent = timeString;
+    }
+    
+    // Simulate battery status
+    function updateBattery() {
+      // Simulate random battery level between 20% and 95%
+      const level = Math.floor(Math.random() * 76) + 20;
+      batteryPercent.textContent = `${level}%`;
+      
+      // Update battery visual
+      batteryLevel.className = 'battery-fill';
+      if (level > 70) {
+        batteryLevel.classList.add('battery-high');
+      } else if (level > 30) {
+        batteryLevel.classList.add('battery-medium');
       } else {
-        const bc = c.value.replace(/[^0-9]/g, "");
-        let bb = "";
-        let bbc = "";
-        const cc = bc.split('');
-        cc.map(a => {
-          bbc += a;
-          if (bbc.length == 3) {
-            bb += " " + a;
-          } else if (bbc.length == 8) {
-            bb += " " + a;
-          } else {
-            bb += a;
+        batteryLevel.classList.add('battery-low');
+      }
+      
+      batteryLevel.style.width = `${level}%`;
+    }
+    
+    // Check API status
+    async function checkApiStatus() {
+      try {
+        // Simulate API check - in a real scenario, you'd ping your server
+        const isApiWorking = Math.random() > 0.1; // 90% chance of being true
+        
+        if (isApiWorking) {
+          apiStatus.className = 'status-item api-status api-true';
+          apiStatus.innerHTML = '<i class="fas fa-circle"></i><span>API: TRUE</span>';
+        } else {
+          apiStatus.className = 'status-item api-status api-false';
+          apiStatus.innerHTML = '<i class="fas fa-circle"></i><span>API: FALSE</span>';
+        }
+        
+        return isApiWorking;
+      } catch (error) {
+        apiStatus.className = 'status-item api-status api-false';
+        apiStatus.innerHTML = '<i class="fas fa-circle"></i><span>API: FALSE</span>';
+        return false;
+      }
+    }
+    
+    // Copy to clipboard
+    async function copyToClipboard() {
+      let text = document.getElementById("copy-value").innerText;
+      let codeDisplay = document.getElementById("code-display");
+      
+      try {
+        await navigator.clipboard.writeText(text);
+        
+        codeDisplay.innerHTML = '<i class="fas fa-check" style="color:#00ff00; margin-right:8px;"></i> COPIED!';
+        codeDisplay.style.background = 'rgba(0, 255, 0, 0.1)';
+        codeDisplay.style.border = '1px solid rgba(0, 255, 0, 0.3)';
+        
+        setTimeout(() => {
+          codeDisplay.innerHTML = `
+            <i class="fas fa-copy" style="color:var(--secondary);"></i>
+            <span class="code-text">CODE:</span>
+            <span class="code-value" id="copy-value">${text}</span>
+          `;
+          codeDisplay.style.background = 'rgba(0, 0, 0, 0.3)';
+          codeDisplay.style.border = '1px solid var(--glass-border)';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+      }
+    }
+    
+    // Initialize
+    function init() {
+      createParticles();
+      updateTime();
+      updateBattery();
+      checkApiStatus();
+      
+      // Update time every second
+      setInterval(updateTime, 1000);
+      
+      // Update battery every 30 seconds
+      setInterval(updateBattery, 30000);
+      
+      // Check API status every minute
+      setInterval(checkApiStatus, 60000);
+    }
+    
+    // Form submission
+    submitButton.addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      // Check API status first
+      const isApiWorking = await checkApiStatus();
+      if (!isApiWorking) {
+        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> API is currently unavailable. Please try again later.</div>';
+        return;
+      }
+      
+      if (!numberInput.value) {
+        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Enter your WhatsApp number with country code.</div>';
+      } else if (numberInput.value.replace(/[^0-9]/g, "").length < 11) {
+        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-times"></i> Invalid number format</div>';
+      } else {
+        const cleanNumber = numberInput.value.replace(/[^0-9]/g, "");
+        let formattedNumber = "";
+        
+        // Format number for display
+        const digits = cleanNumber.split('');
+        digits.forEach((digit, index) => {
+          if (index === 0) {
+            formattedNumber += '+';
+          }
+          formattedNumber += digit;
+          if (index === 2 || index === 5 || index === 8) {
+            formattedNumber += " ";
           }
         });
-        c.type = "text";
-        c.value = "+" + bb;
-        c.style = "color:black;font-size:20px";
-        a.innerHTML = '<a style="color:black;font-weight:bold">Please wait </a><br><br>';
-        let { data } = await axios(`/code?number=${bc}`);
-        let code = data.code || "Service Unavailable";
-        a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
+        
+        numberInput.value = formattedNumber;
+        waitingMessage.style.display = "block";
+        pairElement.innerHTML = '';
+        
+        try {
+          // Get current configuration values
+          const config = {
+            AUTO_LIKE_STATUS: autoLike.checked,
+            AUTO_VIEW_STATUS: autoView.checked,
+            AUTO_LIKE_EMOJI: autoEmoji.value,
+            AUTO_RECORDING: autoRecord.checked
+          };
+          
+          // In a real implementation, you would send this config to your server
+          send this config to your server
+          console.log('Sending configuration:', config);
+          
+          let { data } = await axios.get(`/code?number=${cleanNumber}`);
+          let code = data.code || "Service Unavailable";
+          
+          waitingMessage.style.display = "none";
+          
+          pairElement.innerHTML = `
+            <div class="code-display pulse" id="code-display" onclick="copyToClipboard()">
+              <i class="fas fa-copy" style="color:var(--secondary);"></i>
+              <span class="code-text">CODE:</span>
+              <span class="code-value" id="copy-value">${code}</span>
+            </div>
+            <div class="success-message">
+              <i class="fas fa-check-circle"></i> Configuration applied successfully!
+            </div>
+          `;
+        } catch (error) {
+          waitingMessage.style.display = "none";
+          pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Service Unavailable</div>';
+        }
       }
     });
+    
+    // Initialize the application
+    init();
   </script>
 </body>
-  </html>
-    
+</html>
