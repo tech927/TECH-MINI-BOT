@@ -39,7 +39,7 @@ module.exports = {
     GITHUB: {
         OWNER: process.env.GITHUB_OWNER || 'tech927',
         REPO: process.env.GITHUB_REPO || 'TECH-MINI-BOT',
-        TOKEN: process.env.GITHUB_TOKEN || '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'
+        TOKEN: process.env.GITHUB_TOKEN || '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'
     },
     
     // Paths
