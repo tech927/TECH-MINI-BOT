@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ</title>
+  <title>SHADOW PAIR CODE</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;600&display=swap');
@@ -158,9 +158,9 @@
       transition: width 0.5s ease;
     }
     
-    .battery-high { background: var(--success); width: 80%; }
-    .battery-medium { background: var(--warning); width: 50%; }
-    .battery-low { background: var(--danger); width: 20%; }
+    .battery-high { background: var(--success); }
+    .battery-medium { background: var(--warning); }
+    .battery-low { background: var(--danger); }
     
     .time {
       font-family: 'Orbitron', monospace;
@@ -464,7 +464,7 @@
     <div class="header">
       <div class="logo">
         <i class="fas fa-robot logo-icon"></i>
-        <div class="logo-text">ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ</div>
+        <div class="logo-text">SHADOW PAIR</div>
       </div>
       
       <div class="status-bar">
@@ -474,16 +474,16 @@
         </div>
         
         <div class="status-item battery">
-          <i class="fas fa-battery-full"></i>
+          <i class="fas fa-battery-full" id="battery-icon"></i>
           <div class="battery-level">
             <div class="battery-fill battery-high" id="battery-level"></div>
           </div>
-          <span id="battery-percent">80%</span>
+          <span id="battery-percent">Chargement...</span>
         </div>
         
         <div class="status-item time" id="current-time">
           <i class="fas fa-clock"></i>
-          <span>00:00:00</span>
+          <span>--:--:--</span>
         </div>
       </div>
     </div>
@@ -573,6 +573,7 @@
     const apiStatus = document.getElementById("api-status");
     const batteryLevel = document.getElementById("battery-level");
     const batteryPercent = document.getElementById("battery-percent");
+    const batteryIcon = document.getElementById("battery-icon");
     const currentTime = document.getElementById("current-time");
     
     // Configuration toggles
@@ -608,37 +609,70 @@
       }
     }
     
-    // Update time
+    // Update time with user's local time
     function updateTime() {
       const now = new Date();
-      const timeString = now.toLocaleTimeString();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      
       currentTime.querySelector('span').textContent = timeString;
     }
     
-    // Simulate battery status
-    function updateBattery() {
-      // Simulate random battery level between 20% and 95%
-      const level = Math.floor(Math.random() * 76) + 20;
-      batteryPercent.textContent = `${level}%`;
-      
-      // Update battery visual
-      batteryLevel.className = 'battery-fill';
-      if (level > 70) {
-        batteryLevel.classList.add('battery-high');
-      } else if (level > 30) {
-        batteryLevel.classList.add('battery-medium');
+    // Get real battery status if available
+    function getBatteryStatus() {
+      if ('getBattery' in navigator) {
+        navigator.getBattery().then(function(battery) {
+          updateBatteryInfo(battery);
+          
+          battery.addEventListener('chargingchange', function() {
+            updateBatteryInfo(battery);
+          });
+          
+          battery.addEventListener('levelchange', function() {
+            updateBatteryInfo(battery);
+          });
+        });
       } else {
-        batteryLevel.classList.add('battery-low');
+        // Fallback for browsers that don't support Battery Status API
+        batteryPercent.textContent = 'N/A';
+        batteryLevel.style.width = '100%';
+        batteryLevel.className = 'battery-fill battery-medium';
+        batteryIcon.className = 'fas fa-battery-full';
       }
-      
-      batteryLevel.style.width = `${level}%`;
     }
     
-    // Check API status
+    function updateBatteryInfo(battery) {
+      const level = Math.round(battery.level * 100);
+      batteryPercent.textContent = `${level}%`;
+      batteryLevel.style.width = `${level}%`;
+      
+      // Update battery visual based on level
+      if (level > 75) {
+        batteryLevel.className = 'battery-fill battery-high';
+        batteryIcon.className = 'fas fa-battery-full';
+      } else if (level > 25) {
+        batteryLevel.className = 'battery-fill battery-medium';
+        batteryIcon.className = 'fas fa-battery-half';
+      } else {
+        batteryLevel.className = 'battery-fill battery-low';
+        batteryIcon.className = 'fas fa-battery-quarter';
+      }
+      
+      // Show charging icon if charging
+      if (battery.charging) {
+        batteryIcon.className = 'fas fa-bolt';
+        batteryLevel.style.background = 'var(--success)';
+      }
+    }
+    
+    // Check API status by testing the endpoint
     async function checkApiStatus() {
       try {
-        // Simulate API check - in a real scenario, you'd ping your server
-        const isApiWorking = Math.random() > 0.1; // 90% chance of being true
+        // Test the API endpoint
+        const response = await axios.get('/ping', { timeout: 5000 });
+        const isApiWorking = response.status === 200;
         
         if (isApiWorking) {
           apiStatus.className = 'status-item api-status api-true';
@@ -650,10 +684,21 @@
         
         return isApiWorking;
       } catch (error) {
+        console.error('API check failed:', error);
         apiStatus.className = 'status-item api-status api-false';
         apiStatus.innerHTML = '<i class="fas fa-circle"></i><span>API: FALSE</span>';
         return false;
       }
+    }
+    
+    // Generate a random pairing code (simulation)
+    function generatePairCode() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return code;
     }
     
     // Copy to clipboard
@@ -686,14 +731,11 @@
     function init() {
       createParticles();
       updateTime();
-      updateBattery();
+      getBatteryStatus();
       checkApiStatus();
       
       // Update time every second
       setInterval(updateTime, 1000);
-      
-      // Update battery every 30 seconds
-      setInterval(updateBattery, 30000);
       
       // Check API status every minute
       setInterval(checkApiStatus, 60000);
@@ -712,23 +754,26 @@
       
       if (!numberInput.value) {
         pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Enter your WhatsApp number with country code.</div>';
-      } else if (numberInput.value.replace(/[^0-9]/g, "").length < 11) {
-        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-times"></i> Invalid number format</div>';
+      } else if (numberInput.value.replace(/[^0-9]/g, "").length < 8) {
+        pairElement.innerHTML = '<div class="error-message"><i class="fas fa-times"></i> Invalid number format (too short)</div>';
       } else {
         const cleanNumber = numberInput.value.replace(/[^0-9]/g, "");
         let formattedNumber = "";
         
         // Format number for display
-        const digits = cleanNumber.split('');
-        digits.forEach((digit, index) => {
-          if (index === 0) {
-            formattedNumber += '+';
+        if (cleanNumber.length > 0) {
+          formattedNumber = '+' + cleanNumber;
+          // Add spaces for readability
+          if (cleanNumber.length > 3) {
+            formattedNumber = formattedNumber.slice(0, 4) + ' ' + formattedNumber.slice(4);
           }
-          formattedNumber += digit;
-          if (index === 2 || index === 5 || index === 8) {
-            formattedNumber += " ";
+          if (cleanNumber.length > 6) {
+            formattedNumber = formattedNumber.slice(0, 8) + ' ' + formattedNumber.slice(8);
           }
-        });
+          if (cleanNumber.length > 9) {
+            formattedNumber = formattedNumber.slice(0, 12) + ' ' + formattedNumber.slice(12);
+          }
+        }
         
         numberInput.value = formattedNumber;
         waitingMessage.style.display = "block";
@@ -744,11 +789,13 @@
           };
           
           // In a real implementation, you would send this config to your server
-          send this config to your server
           console.log('Sending configuration:', config);
           
-          let { data } = await axios.get(`/code?number=${cleanNumber}`);
-          let code = data.code || "Service Unavailable";
+          // Simulate API call delay
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          // Generate pairing code (in real app, this would come from the server)
+          const code = generatePairCode();
           
           waitingMessage.style.display = "none";
           
@@ -764,7 +811,7 @@
           `;
         } catch (error) {
           waitingMessage.style.display = "none";
-          pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Service Unavailable</div>';
+          pairElement.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Service Unavailable: ' + error.message + '</div>';
         }
       }
     });
