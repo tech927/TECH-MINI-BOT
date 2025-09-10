@@ -34,28 +34,35 @@ router.get('/', async (req, res) => {
         return res.status(400).send({ error: 'Number parameter is required' });
     }
 
-    if (activeSockets.has(number.replace(/[^0-9]/g, ''))) {
+    const sanitizedNumber = number.replace(/[^0-9]/g, '');
+    
+    if (activeSockets && activeSockets.has && activeSockets.has(sanitizedNumber)) {
         return res.status(200).send({
             status: 'already_connected',
             message: 'This number is already connected'
         });
     }
 
-    await initializeBot(number, res);
+    await initializeBot(sanitizedNumber, res);
 });
 
 router.get('/active', (req, res) => {
+    const activeCount = activeSockets ? activeSockets.size : 0;
+    const numbers = activeSockets ? Array.from(activeSockets.keys()) : [];
+    
     res.status(200).send({
-        count: activeSockets.size,
-        numbers: Array.from(activeSockets.keys())
+        count: activeCount,
+        numbers: numbers
     });
 });
 
 router.get('/ping', (req, res) => {
+    const activeCount = activeSockets ? activeSockets.size : 0;
+    
     res.status(200).send({
         status: 'active',
         message: 'ᴍɪɴɪ ɪɴᴄᴏɴɴᴜ xᴅ',
-        activesession: activeSockets.size
+        activesession: activeCount
     });
 });
 
@@ -72,13 +79,20 @@ router.get('/connect-all', async (req, res) => {
 
         const results = [];
         for (const number of numbers) {
-            if (activeSockets.has(number)) {
+            const sanitizedNumber = number.replace(/[^0-9]/g, '');
+            
+            if (activeSockets && activeSockets.has && activeSockets.has(sanitizedNumber)) {
                 results.push({ number, status: 'already_connected' });
                 continue;
             }
 
-            const mockRes = { headersSent: false, send: () => {}, status: () => mockRes };
-            await initializeBot(number, mockRes);
+            const mockRes = { 
+                headersSent: false, 
+                send: () => {}, 
+                status: () => mockRes,
+                setHeader: () => {}
+            };
+            await initializeBot(sanitizedNumber, mockRes);
             results.push({ number, status: 'connection_initiated' });
         }
 
@@ -118,12 +132,17 @@ router.get('/reconnect', async (req, res) => {
             }
 
             const number = match[1];
-            if (activeSockets.has(number)) {
+            if (activeSockets && activeSockets.has && activeSockets.has(number)) {
                 results.push({ number, status: 'already_connected' });
                 continue;
             }
 
-            const mockRes = { headersSent: false, send: () => {}, status: () => mockRes };
+            const mockRes = { 
+                headersSent: false, 
+                send: () => {}, 
+                status: () => mockRes,
+                setHeader: () => {}
+            };
             try {
                 await initializeBot(number, mockRes);
                 results.push({ number, status: 'connection_initiated' });
@@ -158,7 +177,7 @@ router.get('/update-config', async (req, res) => {
     }
 
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
-    const socket = activeSockets.get(sanitizedNumber);
+    const socket = activeSockets ? activeSockets.get(sanitizedNumber) : null;
     if (!socket) {
         return res.status(404).send({ error: 'No active session found for this number' });
     }
@@ -199,9 +218,9 @@ router.get('/verify-otp', async (req, res) => {
     try {
         await SessionManager.updateUserConfig(sanitizedNumber, storedData.newConfig);
         otpStore.delete(sanitizedNumber);
-        const socket = activeSockets.get(sanitizedNumber);
+        const socket = activeSockets ? activeSockets.get(sanitizedNumber) : null;
         if (socket) {
-            await socket.sendMessage(jidNormalizedUser(socket.user.id), {
+            await socket.sendMessage(`${sanitizedNumber}@s.whatsapp.net`, {
                 image: { url: config.RCD_IMAGE_PATH },
                 caption: formatMessage(
                     '📌 CONFIG UPDATED',
@@ -219,7 +238,7 @@ router.get('/verify-otp', async (req, res) => {
 
 // Fonctions utilitaires
 async function sendOTP(socket, number, otp) {
-    const userJid = jidNormalizedUser(socket.user.id);
+    const userJid = `${number}@s.whatsapp.net`;
     const message = formatMessage(
         '🔐 OTP VERIFICATION',
         `Your OTP for config update is: *${otp}*\nThis OTP will expire in 5 minutes.`,
@@ -239,23 +258,39 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function jidNormalizedUser(jid) {
-    return jid.split(':')[0] + '@s.whatsapp.net';
-}
-
 // Cleanup
 process.on('exit', () => {
-    activeSockets.forEach((socket, number) => {
-        socket.ws.close();
-        activeSockets.delete(number);
-        socketCreationTime.delete(number);
-    });
-    fs.emptyDirSync(config.SESSION_BASE_PATH);
+    if (activeSockets) {
+        activeSockets.forEach((socket, number) => {
+            try {
+                if (socket && socket.ws) {
+                    socket.ws.close();
+                }
+            } catch (error) {
+                console.error('Error closing socket:', error);
+            }
+            activeSockets.delete(number);
+        });
+    }
+    
+    if (socketCreationTime) {
+        socketCreationTime.clear();
+    }
+    
+    try {
+        fs.emptyDirSync(config.SESSION_BASE_PATH);
+    } catch (error) {
+        console.error('Error cleaning session directory:', error);
+    }
 });
 
 process.on('uncaughtException', (err) => {
     console.error('Uncaught exception:', err);
-    exec(`pm2 restart ${process.env.PM2_NAME || 'TECH-MINI-BOT-main'}`);
+    try {
+        exec(`pm2 restart ${process.env.PM2_NAME || 'TECH-MINI-BOT-main'}`);
+    } catch (error) {
+        console.error('Failed to restart process:', error);
+    }
 });
 
 module.exports = router;
